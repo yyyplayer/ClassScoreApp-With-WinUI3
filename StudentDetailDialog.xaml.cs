@@ -22,6 +22,7 @@ namespace ClassScoreApp_WinUI3
 
             // 顺便记一笔历史记录
             CurrentStudent.History.Insert(0, $"{System.DateTime.Now:yyyy:MM:dd,HH:mm} 加了 {val} 分");
+            App.SaveData();
         }
 
         // 处理“扣分”点击
@@ -32,6 +33,7 @@ namespace ClassScoreApp_WinUI3
 
             // 顺便记一笔历史记录
             CurrentStudent.History.Insert(0, $"{System.DateTime.Now:yyyy:MM:dd,HH:mm} 扣了 {val} 分");
+            App.SaveData();
         }
     }
 }

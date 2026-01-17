@@ -78,6 +78,7 @@ namespace ClassScoreApp_WinUI3
         {
             if (File.Exists(_filePath))
             {
+                System.Diagnostics.Debug.WriteLine($"正在尝试存档，当前人数：{GlobalStudents.Count}");
                 string jsonString = File.ReadAllText(_filePath);
                 // 把字符串变回集合
                 var savedData = JsonSerializer.Deserialize<ObservableCollection<Student>>(jsonString);

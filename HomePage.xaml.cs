@@ -82,6 +82,7 @@ namespace ClassScoreApp_WinUI3
 
                 // 【关键】直接加进集合，界面会自动蹦出一个新卡片！
                 Students.Add(newStudent);
+                App.SaveData();
             }
         }
     }
