@@ -18,7 +18,7 @@
         <Grid x:Name="AppTitleBar" Grid.Row="0" Height="45">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0">
                 <Image Source="ms-appx:///Assets/StoreLogo.png" Width="16" Height="16"/>
-                <TextBlock Text="班级优化大师 - WinUI3版" Margin="12,0" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}"/>
+                <TextBlock Text="班级积分管理系统 - WinUI3版" Margin="12,0" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}"/>
             </StackPanel>
         </Grid>
 
