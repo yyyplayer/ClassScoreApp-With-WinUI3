@@ -1,0 +1,76 @@
+<Page
+    x:Class="ClassScoreApp_WinUI3.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ClassScoreApp_WinUI3">
+
+    <Grid Padding="20">
+        <!-- 我们现在只需要定义一行，让 GridView 占满 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. 学生网格：占满整个 Grid -->
+        <GridView x:Name="StudentGrid" 
+                  Grid.Row="0"
+                  Margin="0,0,0,60" 
+                  IsItemClickEnabled="True" 
+                  ItemClick="StudentGrid_ItemClick" 
+                  SelectionMode="None"
+                  HorizontalAlignment="Center">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="local:Student">
+                    <RelativePanel Width="150" Height="100" CornerRadius="8" BorderThickness="1" 
+                                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                        <TextBlock x:Name="t1" Text="{x:Bind Name}" RelativePanel.AlignHorizontalCenterWithPanel="True" Margin="0,10"/>
+                        <TextBlock Text="{x:Bind Score, Mode=OneWay}" Foreground="Red" FontWeight="Bold" FontSize="24"
+                                   RelativePanel.Below="t1" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                    </RelativePanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <!-- 2. 右下角操作容器：利用 Horizontal/Vertical Alignment 对齐 -->
+        <StackPanel Grid.Row="0" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom"
+                    Spacing="12" 
+                    Padding="10">
+            <!-- 新增：添加学生按钮 -->
+            <Button x:Name="AddStudentBtn" 
+            Click="AddStudentBtn_Click"
+            Style="{StaticResource DefaultButtonStyle}"
+            ToolTipService.ToolTip="添加新学生">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <SymbolIcon Symbol="Add"/>
+                    <TextBlock Text="添加学生"/>
+                </StackPanel>
+            </Button>
+
+            <AppBarSeparator/>
+            <!-- 加个小竖线隔开 -->
+
+            <!-- 批量操作按钮（仅在批量模式开启时显示） -->
+            <CommandBar x:Name="BatchActions" 
+                        Visibility="Collapsed" 
+                        Background="Transparent" 
+                        DefaultLabelPosition="Right">
+                <AppBarButton Icon="Add" Label="选中学生加 1 分" Click="BatchAdd_Click"/>
+            </CommandBar>
+
+            <!-- 批量模式开关 -->
+            <ToggleSwitch x:Name="BatchModeSwitch" 
+                          Header="批量模式" 
+                          OffContent="Off" OnContent="On"
+                          Toggled="BatchModeSwitch_Toggled" 
+                          VerticalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Page>
