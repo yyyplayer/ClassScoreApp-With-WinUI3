@@ -1,65 +1,44 @@
 ﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-//using Microsoft.UI.Xaml.Shapes;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using System.Text.Json; // 处理 JSON
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System.Text.Json;
 
 namespace ClassScoreApp_WinUI3
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
     public partial class App : Application
     {
-        private Window? _window;
+        // 这个是给 SettingsPage 用的“身份证”，必须在 OnLaunched 里赋值
+        public static Window m_window;
 
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
         public App()
         {
-            LoadData();
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
-            _window.Activate();
+            // 【关键修复】：把 new 出来的窗口给到 m_window
+            m_window = new MainWindow();
+            m_window.Activate();
+
+            // 启动时加载数据
+            LoadData();
         }
 
+        // 数据存储相关逻辑
         public static ObservableCollection<Student> GlobalStudents = new ObservableCollection<Student>();
+
+        // 存储路径：C:\Users\用户名\AppData\Local\ClassScoreApp\data.json
         private static string _filePath = Path.Combine(
-    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-    "ClassScoreApp",
-    "data.json");
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "ClassScoreApp",
+            "data.json");
+
         public static void SaveData()
         {
             try
             {
-                // 自动创建文件夹（如果文件夹已经存在，这行代码什么都不会做，很安全）
                 string directory = Path.GetDirectoryName(_filePath);
                 if (!Directory.Exists(directory))
                 {
@@ -68,26 +47,39 @@ namespace ClassScoreApp_WinUI3
 
                 string jsonString = JsonSerializer.Serialize(GlobalStudents, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(_filePath, jsonString);
+                System.Diagnostics.Debug.WriteLine($"存档成功！路径: {_filePath}");
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"存档失败: {ex.Message}");
             }
         }
+
         public static void LoadData()
         {
-            if (File.Exists(_filePath))
+            try
             {
-                System.Diagnostics.Debug.WriteLine($"正在尝试存档，当前人数：{GlobalStudents.Count}");
-                string jsonString = File.ReadAllText(_filePath);
-                // 把字符串变回集合
-                var savedData = JsonSerializer.Deserialize<ObservableCollection<Student>>(jsonString);
-
-                if (savedData != null)
+                if (File.Exists(_filePath))
                 {
-                    GlobalStudents.Clear();
-                    foreach (var s in savedData) GlobalStudents.Add(s);
+                    string jsonString = File.ReadAllText(_filePath);
+                    var savedData = JsonSerializer.Deserialize<ObservableCollection<Student>>(jsonString);
+
+                    if (savedData != null)
+                    {
+                        GlobalStudents.Clear();
+                        foreach (var s in savedData)
+                        {
+                            // 确保加载回来的学生也初始化了历史记录集合
+                            if (s.History == null) s.History = new ObservableCollection<string>();
+                            GlobalStudents.Add(s);
+                        }
+                        System.Diagnostics.Debug.WriteLine($"载入成功，共 {GlobalStudents.Count} 人");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"读档失败: {ex.Message}");
             }
         }
     }

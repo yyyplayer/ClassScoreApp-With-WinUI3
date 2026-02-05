@@ -57,23 +57,25 @@ namespace ClassScoreApp_WinUI3
             // 1. 获取当前选中的项
             var selectedItem = args.SelectedItemContainer as NavigationViewItem;
 
-            if (selectedItem != null)
+            if (selectedItem != null && selectedItem.Tag != null)
             {
-                // 2. 获取我们在 XAML 里写的 Tag (HomePage 或 AboutPage)
                 string pageTag = selectedItem.Tag.ToString();
 
-                // 3. 根据 Tag 跳转
-                if (pageTag == "HomePage")
+                // 分发中心：根据不同的 Tag 加载不同的 XAML 页面
+                switch (pageTag)
                 {
-                    ContentFrame.Navigate(typeof(HomePage));
-                }
-                else if (pageTag == "AboutPage")
-                {
-                    ContentFrame.Navigate(typeof(AboutPage));
-                }
-                else if(pageTag == "ListPage")
-                {
-                    ContentFrame.Navigate(typeof (ListPage));
+                    case "HomePage":
+                        ContentFrame.Navigate(typeof(HomePage));
+                        break;
+                    case "ListPage":
+                        ContentFrame.Navigate(typeof(ListPage));
+                        break;
+                    case "SettingsPage":
+                        ContentFrame.Navigate(typeof(SettingsPage));
+                        break;
+                    case "AboutPage":
+                        ContentFrame.Navigate(typeof(AboutPage));
+                        break;
                 }
             }
         }

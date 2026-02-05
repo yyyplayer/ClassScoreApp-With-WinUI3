@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!--<WindowsPackageType>None</WindowsPackageType>-->
     <OutputType>WinExe</OutputType>
@@ -17,6 +17,7 @@
     <None Remove="AboutPage.xaml" />
     <None Remove="HomePage.xaml" />
     <None Remove="ListPage.xaml" />
+    <None Remove="SettingsPage.xaml" />
     <None Remove="StudentDetailDialog.xaml" />
   </ItemGroup>
 
@@ -43,8 +44,14 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="ListPage.xaml">

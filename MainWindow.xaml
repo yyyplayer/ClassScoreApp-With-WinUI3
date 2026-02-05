@@ -34,12 +34,21 @@
                 <NavigationViewItem x:Name="ListItem" Content="列表显示" Icon="List" Tag="ListPage"/>
             </NavigationView.MenuItems>
 
-            <!-- 2. 底部固定菜单栏（修复了 Info 图标报错） -->
+            <!-- 2. 底部双菜单：设置 + 关于 -->
             <NavigationView.FooterMenuItems>
+                <!-- 设置项 -->
+                <NavigationViewItem Content="设置" Tag="SettingsPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE713;"/>
+                        <!-- 齿轮图标 -->
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <!-- 关于项 -->
                 <NavigationViewItem Content="关于" Tag="AboutPage">
                     <NavigationViewItem.Icon>
-                        <!-- 这里使用图标代码，不会再报 XLS0431 错误 -->
                         <FontIcon Glyph="&#xE946;"/>
+                        <!-- 信息图标 -->
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
