@@ -71,6 +71,10 @@ namespace ClassScoreApp_WinUI3
                 {
                     ContentFrame.Navigate(typeof(AboutPage));
                 }
+                else if(pageTag == "ListPage")
+                {
+                    ContentFrame.Navigate(typeof (ListPage));
+                }
             }
         }
     }

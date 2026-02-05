@@ -27,7 +27,7 @@
             <TextBlock TextWrapping="Wrap" Text="由 C# 与 XAML 构建。目前支持学生积分加减、历史记录追踪以及批量操作功能。"/>
 
             <!-- 友情提示：你可以用 HyperlinkButton 做链接 -->
-            <HyperlinkButton Content="访问项目 GitHub 仓库" NavigateUri="https://github.com/yyyplayer/ClassScoreApp_WinUI3/tree/main" />
+            <HyperlinkButton Content="访问项目 GitHub 仓库" NavigateUri="https://github.com/yyyplayer/ClassScoreApp-With-WinUI3" />
 
             <TextBlock Text="2026 yyyplayer." Margin="0,40,0,0" Opacity="0.4"/>
         </StackPanel>

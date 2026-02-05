@@ -31,6 +31,7 @@
             <!-- 1. 顶部菜单栏 -->
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Name="HomeItem" Content="主页" Icon="Home" Tag="HomePage"/>
+                <NavigationViewItem x:Name="ListItem" Content="列表显示" Icon="List" Tag="ListPage"/>
             </NavigationView.MenuItems>
 
             <!-- 2. 底部固定菜单栏（修复了 Info 图标报错） -->
